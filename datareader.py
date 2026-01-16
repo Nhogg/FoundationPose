@@ -119,11 +119,24 @@ class YcbineoatReader:
     mask = cv2.resize(mask, (self.W,self.H), interpolation=cv2.INTER_NEAREST).astype(bool).astype(np.uint8)
     return mask
 
-  def get_depth(self,i):
-    depth = cv2.imread(self.color_files[i].replace('rgb','depth'),-1)/1e3
-    depth = cv2.resize(depth, (self.W,self.H), interpolation=cv2.INTER_NEAREST)
-    depth[(depth<0.001) | (depth>=self.zfar)] = 0
-    return depth
+#  def get_depth(self,i):
+#    depth = cv2.imread(self.color_files[i].replace('rgb','depth'),-1)/1e3
+#    depth = cv2.resize(depth, (self.W,self.H), interpolation=cv2.INTER_NEAREST)
+#    depth[(depth<0.001) | (depth>=self.zfar)] = 0
+#    return depth
+
+# If depth dir is empty, generate a dummy depth map 
+    def get_depth(self, i):
+        depth_path = self.color_files[i].replace('rgb', 'depth')
+        depth = cv2.imread(depth_path, -1)
+
+        if depth is None:
+            return np.zeros((self.H, self.W), dtype=np.float32)
+
+        depth = depth / 1e3
+        depth = cv2.reseize(depth, (self.W, self.H), interpolation=cv2.INTER_NEAREST)
+        depth[(depth<0.001) | (depth>=self.zfar)] = 0 
+        return depth
 
 
   def get_xyz_map(self,i):

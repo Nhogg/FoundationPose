@@ -48,14 +48,30 @@ except:
 #  mycpp = None
 # Force compiled extension path
 
-import sys
-sys.path.append("~/FoundationPose/mycpp/build")
+import sys 
+import os 
+import glob 
+import importlib.util 
 
-import mycpp
-print(f"SUCCESS: mycpp loaded manually. Cluster poses available: {hasattr(mycpp, 'cluster_poses')}")
+build_dir = "/home/nhogg/FP/FoundationPose/mycpp/build/"
 
-try:
-  from bundlesdf.mycuda import common
+so_files = glob.glob(os.path.join(build_dir, "mycpp*.so"))
+
+if not so_files:
+    print(f"NO .so FILES FOUND IN {build_dir}")
+    sys.exit(1)
+else:
+    so_path = so_files[0]
+    print(f"Force-loading C++ extension from {so_path}")
+
+    spec = importlib.util.spec_from_file_location("mycp", so_path)
+    mycpp = importlib.util.module_from_spec(spec)
+    spec.loader.exec_modul(mycpp)
+
+    print(f"Success. Cluster poses available: {hasattr(mycpp, 'cluster_poses')}")
+
+
+from bundlesdf.mycuda import common
 except:
   common = None
 try:

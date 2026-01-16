@@ -155,4 +155,5 @@ dmypy.json
 data/
 logs/
 !BundleTrack/XMem/inference/data
-run_used.yml
+run_used.ymlweights/
+my_data/

@@ -1,0 +1,10 @@
+Warp 1.0.2 initialized:
+   CUDA Toolkit 11.5, Driver 12.8
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "Quadro RTX 8000" (47 GiB, sm_75, mempool enabled)
+     "cuda:1"   : "Quadro RTX 8000" (47 GiB, sm_75, mempool enabled)
+   CUDA peer access:
+     Supported fully (all-directional)
+   Kernel cache:
+     /home/nhogg/.cache/warp/1.0.2

@@ -42,10 +42,18 @@ try:
   import kornia
 except:
   kornia = None
-try:
-  import mycpp.build.mycpp as mycpp
-except:
-  mycpp = None
+#try:
+#  import mycpp.build.mycpp as mycpp
+#except:
+#  mycpp = None
+# Force compiled extension path
+
+import sys
+sys.path.append("~/FoundationPose/mycpp/build")
+
+import mycpp
+print(f"SUCCESS: mycpp loaded manually. Cluster poses available: {hasattr(mycpp, 'cluster_poses')}")
+
 try:
   from bundlesdf.mycuda import common
 except:

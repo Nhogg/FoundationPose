@@ -64,14 +64,14 @@ else:
     so_path = so_files[0]
     print(f"Force-loading C++ extension from {so_path}")
 
-    spec = importlib.util.spec_from_file_location("mycp", so_path)
+    spec = importlib.util.spec_from_file_location("mycpp", so_path)
     mycpp = importlib.util.module_from_spec(spec)
-    spec.loader.exec_modul(mycpp)
+    spec.loader.exec_module(mycpp)
 
     print(f"Success. Cluster poses available: {hasattr(mycpp, 'cluster_poses')}")
 
-
-from bundlesdf.mycuda import common
+try:
+    from bundlesdf.mycuda import common
 except:
   common = None
 try:

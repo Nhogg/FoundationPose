@@ -124,7 +124,7 @@ class YcbineoatReader:
       depth = cv2.imread(depth_path, -1)
 
       if depth is None:
-          return np.zeros((self.H, self.W), dtype=np.float32)
+          return np.ones((self.H, self.W), dtype=np.float32) * 1.0
 
       depth = depth / 1e3
       depth = cv2.resize(depth, (self.W, self.H), interpolation=cv2.INTER_NEAREST)

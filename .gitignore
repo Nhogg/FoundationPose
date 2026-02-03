@@ -157,3 +157,6 @@ logs/
 !BundleTrack/XMem/inference/data
 run_used.ymlweights/
 my_data/
+run_used.yml# pixi environments
+.pixi/*
+!.pixi/config.toml

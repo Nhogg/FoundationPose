@@ -1,0 +1,22 @@
+[workspace]
+authors = ["Matthew Hyatt <mhyatt000@gmail.com>"]
+channels = ["conda-forge"]
+name = "foundation_pose"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[dependencies]
+python = "==3.9"
+eigen = "3.4.0.*"
+cmake = ">=3.25.2,<4"
+ninja = ">=1.13.2,<2"
+compilers = ">=1.11.0,<2"
+boost-cpp = ">=1.85.0,<2"
+pybind11 = ">=3.0.1,<4"
+libxcrypt = ">=4.4.36,<5"
+
+[tasks]
+build-mycpp = { 'cmd' = 'bash pixi-build.sh' }
+clean-mycpp = "rm -rf mycpp/build"
+
+demo = 'LD_LIBRARY_PATH="$PWD/.pixi/envs/default/lib:${LD_LIBRARY_PATH}" uv run run_demo.py'

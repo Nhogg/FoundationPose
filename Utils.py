@@ -53,7 +53,7 @@ import os
 import glob 
 import importlib.util 
 
-build_dir = "/home/nhogg/FP/FoundationPose/mycpp/build/"
+build_dir = "/data/home/nhogg/xclients/external/foundation_pose/mycpp/build/"
 
 so_files = glob.glob(os.path.join(build_dir, "mycpp*.so"))
 

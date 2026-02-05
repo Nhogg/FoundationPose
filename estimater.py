@@ -13,6 +13,7 @@ import itertools
 from learning.training.predict_score import *
 from learning.training.predict_pose_refine import *
 import yaml
+import tempfile
 
 
 class FoundationPose:
@@ -65,9 +66,10 @@ class FoundationPose:
     logging.info(f'self.pts:{self.pts.shape}')
     self.mesh_path = None
     self.mesh = mesh
-    if self.mesh is not None:
-      self.mesh_path = f'/tmp/{uuid.uuid4()}.obj'
-      self.mesh.export(self.mesh_path)
+    self._tmp_dir = tempfile.TemporaryDirectory(dir=os.getcwd())
+    self.mesh_path = os.path.join(self._tmp_dir.name, 'mesh.obj')
+    self.mesh.export(self.mesh_path)
+
     self.mesh_tensors = make_mesh_tensors(self.mesh)
 
     if symmetry_tfs is None:
@@ -170,7 +172,7 @@ class FoundationPose:
       else:
         self.glctx = glctx
 
-    # depth = erode_depth(depth, radius=2, device='cuda')
+    depth = erode_depth(depth, radius=2, device='cuda')
     depth = bilateral_filter_depth(depth, radius=2, device='cuda')
 
     if self.debug>=2:
